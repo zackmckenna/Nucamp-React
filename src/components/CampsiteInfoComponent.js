@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Jumbotron, Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 class CampsiteInfo extends Component {
     constructor(props) {
         super(props)
@@ -43,10 +43,12 @@ class CampsiteInfo extends Component {
         const {campsite } = this.props
         if(campsite) {
             return(
-                <div className='row'>
-                    {this.renderCampsite(campsite)}
-                {this.renderComments(campsite.comments)}
-                </div>
+                <Jumbotron className='col-md-10 m-1'>
+                    <div className='row'>
+                        {this.renderCampsite(campsite)}
+                        {this.renderComments(campsite.comments)}
+                    </div>
+                </Jumbotron>
             )
         } else {
             return(
