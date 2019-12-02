@@ -1,11 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Jumbotron, Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
-class CampsiteInfo extends Component {
-    constructor(props) {
-        super(props)
-        this.state={};
-    }
-    renderCampsite(campsite) {
+
+function RenderCampsite({campsite}) {
         return(
             <div className='col-md-5 m-1'>
                 <Card>
@@ -18,7 +14,8 @@ class CampsiteInfo extends Component {
             </div>
         )
     }
-    renderComments(comments) {
+
+function RenderComments({comments}) {
         if(comments) {
             return(
                 <div className='col-md-5 m-1'>
@@ -39,16 +36,17 @@ class CampsiteInfo extends Component {
             </div>
         )
     }
-    render() {
-        const {campsite } = this.props
-        if(campsite) {
+function CampsiteInfo(props){
+        if(props.campsite) {
             return(
-                <Jumbotron className='col-md-10 m-1'>
-                    <div className='row'>
-                        {this.renderCampsite(campsite)}
-                        {this.renderComments(campsite.comments)}
-                    </div>
-                </Jumbotron>
+                <div className='container'>
+                    <Jumbotron className='col-md-10 m-1'>
+                        <div className='row'>
+                            <RenderCampsite campsite={props.campsite}/>
+                            <RenderComments comments={props.campsite.comments}/>
+                        </div>
+                    </Jumbotron>
+                </div>
             )
         } else {
             return(
@@ -57,5 +55,5 @@ class CampsiteInfo extends Component {
             )
         }
     }
-}
+
 export default CampsiteInfo;
