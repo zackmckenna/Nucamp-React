@@ -1,5 +1,5 @@
 import React from 'react'
-import { Breadcrumb, BreadcrumbItem, Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardImg, CardText, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 function RenderCampsite({campsite}) {
