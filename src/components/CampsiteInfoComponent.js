@@ -1,7 +1,9 @@
 import React from 'react'
-import { Jumbotron, Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 function RenderCampsite({campsite}) {
+        console.log(campsite)
+        console.log(campsite.image)
         return(
             <div className='col-md-5 m-1'>
                 <Card>
@@ -40,12 +42,10 @@ function CampsiteInfo(props){
         if(props.campsite) {
             return(
                 <div className='container'>
-                    <Jumbotron className='col-md-10 m-1'>
                         <div className='row'>
                             <RenderCampsite campsite={props.campsite}/>
                             <RenderComments comments={props.campsite.comments}/>
                         </div>
-                    </Jumbotron>
                 </div>
             )
         } else {
