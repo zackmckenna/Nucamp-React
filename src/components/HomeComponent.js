@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 function RenderCard({ item }) {
-  console.log(item)
   return (
     <Card>
       <CardImg src={item.image} alt={item.name} />
@@ -14,7 +13,6 @@ function RenderCard({ item }) {
   )
 }
 function Home(props) {
-  console.log(props)
   return (
     <div className='container'>
       <div className='row'>
