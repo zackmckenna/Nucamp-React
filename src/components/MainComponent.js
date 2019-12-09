@@ -5,7 +5,7 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
-import AboutComponent from './AboutComponent'
+import AboutComponent from './AboutComponent';
 import { CAMPSITES } from '../shared/campsites';
 import { COMMENTS } from '../shared/comments';
 import { PARTNERS } from '../shared/partners';
@@ -23,21 +23,16 @@ class Main extends Component {
       partners: PARTNERS,
       promotions: PROMOTIONS
     };
-    this.mounted = false;
   }
 
   render() {
-    debugger
     const HomePage = () => {
       return (
-        <>
           <Home
             campsite={this.state.campsites.filter(campsite => campsite.featured)[0]}
             promotion={this.state.promotions.filter(promotion => promotion.featured)[0]}
             partner={this.state.partners.filter(partner => partner.featured)[0]}
           />
-          
-        </>
       );
     }
 
