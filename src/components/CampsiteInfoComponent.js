@@ -1,15 +1,98 @@
 import React from 'react'
-import { Breadcrumb, BreadcrumbItem, Card, CardImg, CardText, CardBody } from 'reactstrap';
+import { Button, Row, Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, ModalFooter, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { LocalForm, Control, Errors } from 'react-redux-form';
 
-function RenderCampsite({campsite}) {
-        console.log(campsite)
-        console.log(campsite.image)
+const maxLength = len => val => !val || (val.length <= len);
+const minLength = len => val => val && (val.length >= len);
 
+class CommentForm extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            modal: false
+        };
+        this.toggle = this.toggle.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    toggle() {
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+    handleSubmit(values) {
+        this.toggle()
+        console.log("Current state is: " + JSON.stringify(values));
+        alert("Current state is: " + JSON.stringify(values));
+    }
+
+    render() {
+        return (
+            <div>
+                <Button outline onClick={this.toggle}> <i className='fa fa-pencil' aria-hidden="true"/> Submit Button </Button>
+                    <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                        <ModalHeader toggle={this.toggle}> Submit Comment</ModalHeader>
+                        <ModalBody>
+                            <LocalForm onSubmit={values => this.handleSubmit(values)}>
+                                <Row className='form-group'>
+                                    <Label htmlFor='rating'>Rating</Label>
+                                    <Control.select
+                                        defaultValue={1}
+                                        className='form-control'
+                                        model='.rating'
+                                        name='rating'
+                                        id='rating'
+                                        >
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                    </Control.select>
+                                </Row>
+                                <Row className='form-group'>
+                                    <Label htmlFor='author'>Author</Label>
+                                    <Control.text
+                                        className='form-control'
+                                        model='.author'
+                                        name='rating'
+                                        id='rating'
+                                        validators={
+                                            {minLength: minLength(2),
+                                            maxLength: maxLength(15)}}>
+                                    </Control.text>
+                                    <Errors
+                                        className='text-danger'
+                                        model='.author'
+                                        show='touched'
+                                        component='div'
+                                        messages={{
+                                            minLength: 'Must be at least 2 characters.',
+                                            maxLength: 'Must be 15 characters or less.'
+                                        }}/>
+                                </Row>
+                                <Row className='form-group'>
+                                    <Label htmlFor='text'>Text</Label>
+                                    <Control.textarea
+                                        className='form-control'
+                                        model='.text'
+                                        rows='6'
+                                        id='text'>
+                                    </Control.textarea>
+                                </Row>
+                                <Button>Submit</Button>
+                            </LocalForm>
+                        </ModalBody>
+                    </Modal>
+            </div>
+        )
+    }
+}
+    function RenderCampsite({campsite}) {
         return(
             <div className='col-md-5 m-1'>
                 <Card>
-                    <CardImg src={campsite.image} alt={campsite.name} />
+                    <CardImg top src={campsite.image} alt={campsite.name} />
                     <CardBody>
                         <CardText>{campsite.description}</CardText>
                     </CardBody>
@@ -17,8 +100,7 @@ function RenderCampsite({campsite}) {
             </div>
         )
     }
-
-function RenderComments({comments}) {
+    function RenderComments({comments}) {
         if(comments) {
             return(
                 <div className='col-md-5 m-1'>
@@ -29,42 +111,35 @@ function RenderComments({comments}) {
                                 <p>{comment.text}</p>
                                 <p>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                             </div>
-                        )
+                        );
                     })}
+                      <CommentForm/>
                 </div>
             )
         }
-        return(
-            <div>
-            </div>
-        )
+        return <div />;
     }
-function CampsiteInfo(props){
-        if(props.campsite) {
-            return(
-                <div className='container'>
+    function CampsiteInfo(props) {
+        if (props.campsite) {
+            return (
+                <div className="container">
                     <div className="row">
-                    <div className="col">
-                        <Breadcrumb>
-                            <BreadcrumbItem><Link to='/directory'>Directory</Link></BreadcrumbItem>
-                            <BreadcrumbItem active>{props.campsite.name}</BreadcrumbItem>
-                        </Breadcrumb>
-                    <h2>{props.campsite.name}</h2>
-                    <hr />
+                        <div className="col">
+                            <Breadcrumb>
+                                <BreadcrumbItem><Link to="/directory">Directory</Link></BreadcrumbItem>
+                                <BreadcrumbItem active>{props.campsite.name}</BreadcrumbItem>
+                            </Breadcrumb>
+                            <h2>{props.campsite.name}</h2>
+                            <hr />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <RenderCampsite campsite={props.campsite} />
+                        <RenderComments comments={props.comments} />
                     </div>
                 </div>
-                    <div className='row'>
-                        <RenderCampsite campsite={props.campsite}/>
-                        <RenderComments comments={props.comments}/>
-                    </div>
-                </div>
-            )
-        } else {
-            return(
-                <div>
-                </div>
-            )
+            );
         }
+        return <div />;
     }
-
-export default CampsiteInfo;
+    export default CampsiteInfo;
