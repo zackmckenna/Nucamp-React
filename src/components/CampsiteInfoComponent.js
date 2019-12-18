@@ -21,7 +21,7 @@ class CommentForm extends React.Component {
             modal: !this.state.modal
         });
     }
-    
+
     handleSubmit(values) {
         this.toggle()
         console.log("Current state is: " + JSON.stringify(values));
@@ -102,7 +102,7 @@ class CommentForm extends React.Component {
             </div>
         )
     }
-    function RenderComments({comments}) {
+    function RenderComments({comments, addComment, campsiteId}) {
         if(comments) {
             return(
                 <div className='col-md-5 m-1'>
@@ -115,7 +115,7 @@ class CommentForm extends React.Component {
                             </div>
                         );
                     })}
-                      <CommentForm/>
+                      <CommentForm />
                 </div>
             )
         }
