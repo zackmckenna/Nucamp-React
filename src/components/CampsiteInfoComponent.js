@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Row, Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, ModalFooter, Label } from 'reactstrap';
+import { Button, Row, Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 
@@ -15,11 +15,13 @@ class CommentForm extends React.Component {
         this.toggle = this.toggle.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
     toggle() {
         this.setState({
             modal: !this.state.modal
         });
     }
+    
     handleSubmit(values) {
         this.toggle()
         console.log("Current state is: " + JSON.stringify(values));
