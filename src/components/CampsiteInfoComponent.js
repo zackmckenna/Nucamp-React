@@ -4,7 +4,7 @@ import { Button, Row, Card, CardImg, CardText, CardBody, Breadcrumb, BreadcrumbI
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../shared/baseurl'
+import { baseUrl } from '../shared/baseUrl'
 
 const maxLength = len => val => !val || (val.length <= len);
 const minLength = len => val => val && (val.length >= len);
@@ -14,6 +14,7 @@ class CommentForm extends React.Component {
         super(props);
         this.state = {
             modal: false
+
         };
         this.toggle = this.toggle.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +28,7 @@ class CommentForm extends React.Component {
 
     handleSubmit(values) {
         this.toggle()
-        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
+        this.props.postComment(this.props.campsiteId, values.rating, values.author, values.text);
     }
 
     render() {
@@ -104,7 +105,7 @@ class CommentForm extends React.Component {
             </div>
         )
     }
-    function RenderComments({comments, addComment, campsiteId}) {
+    function RenderComments({comments, postComment, campsiteId}) {
         if(comments) {
             return(
                 <div className='col-md-5 m-1'>
@@ -117,7 +118,7 @@ class CommentForm extends React.Component {
                             </div>
                         );
                     })}
-                      <CommentForm campsiteId={campsiteId} addComment={addComment}/>
+                      <CommentForm campsiteId={campsiteId} postComment={postComment}/>
                 </div>
             )
         }
@@ -161,7 +162,7 @@ class CommentForm extends React.Component {
                         <RenderCampsite campsite={props.campsite} />
                         <RenderComments
                         comments={props.comments}
-                        addComment={props.addComment}
+                        postComment={props.postComment}
                         campsiteId={props.campsite.id}/>
                     </div>
                 </div>
