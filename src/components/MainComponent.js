@@ -9,7 +9,8 @@ import About from './AboutComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form'
-import { fetchPartners, fetchCampsites, fetchComments, fetchPromotions, postComment } from '../redux/ActionCreators';
+import { postFeedback, fetchPartners, fetchCampsites, fetchComments, fetchPromotions, postComment } from '../redux/ActionCreators';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const mapStateToProps = state => {
   return {
@@ -27,8 +28,9 @@ const mapDispatchToProps = {
   fetchComments: () => (fetchComments()),
   fetchPromotions: () => (fetchPromotions()),
   fetchPartners: () => (fetchPartners()),
-  postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text))
-};
+  postComment: (campsiteId, rating, author, text) => (postComment(campsiteId, rating, author, text)),
+  postFeedback: (firstName,lastName, phoneNum, email, agree, contactType, feedback) => (postFeedback(firstName,lastName, phoneNum, email, agree, contactType, feedback))
+}
 
 class Main extends Component {
 
@@ -71,15 +73,19 @@ class Main extends Component {
 
   return (
       <div>
-          <Header />
-          <Switch>
-              <Route path='/home' component={HomePage} />
-              <Route exact path='/directory' render={() => <Directory campsites={this.props.campsites} />} />
-              <Route path='/directory/:campsiteId' component={CampsiteWithId} />
-              <Route exact path='/contactus' render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}/>} />
-              <Route exact path='/about' render={() => <About partners={this.props.partners} /> } />
-              <Redirect to='/home' />
-          </Switch>
+        <Header />
+          <TransitionGroup>
+              <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+                  <Switch>
+                      <Route path='/home' component={HomePage} />
+                      <Route exact path='/directory' render={() => <Directory campsites={this.props.campsites} />} />
+                      <Route path='/directory/:campsiteId' component={CampsiteWithId} />
+                      <Route exact path='/contactus' render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} /> } />
+                      <Route exact path='/aboutus' render={() => <About partners={this.props.partners} /> } />
+                      <Redirect to='/home' />
+                  </Switch>
+              </CSSTransition>
+          </TransitionGroup>
           <Footer />
       </div>
   );

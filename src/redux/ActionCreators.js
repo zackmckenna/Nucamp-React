@@ -49,7 +49,8 @@ export const postComment = (campsiteId, rating, author, text) => dispatch => {
       });
 };
 
-export const postFeedback = (firstName,
+export const postFeedback = (
+  firstName,
   lastName,
   phoneNum, email,
   agree,
@@ -57,6 +58,7 @@ export const postFeedback = (firstName,
   feedback) => dispatch => {
 
   const newFeedback = {
+      firstName: firstName,
       lastName: lastName,
       phoneNum: phoneNum,
       email: email,
@@ -66,7 +68,7 @@ export const postFeedback = (firstName,
   };
   newFeedback.date = new Date().toISOString();
 
-  return fetch(baseUrl + 'comments', {
+  return fetch(baseUrl + 'feedback', {
           method: "POST",
           body: JSON.stringify(newFeedback),
           headers: {
@@ -75,6 +77,7 @@ export const postFeedback = (firstName,
       })
       .then(response => {
               if (response.ok) {
+                window.alert('Thank you for your feedback')
                   return response;
               } else {
                   const error = new Error(`Error ${response.status}: ${response.statusText}`);
@@ -87,8 +90,8 @@ export const postFeedback = (firstName,
       .then(response => response.json())
       .then(response => dispatch(addComment(response)))
       .catch(error => {
-          console.log('post comment', error.message);
-          alert('Your comment could not be posted\nError: ' + error.message);
+          console.log('post feedback', error.message);
+          alert('Your feedback could not be posted\nError: ' + error.message);
       });
 };
 
