@@ -49,13 +49,13 @@ export const postComment = (campsiteId, rating, author, text) => dispatch => {
       });
 };
 
-export const postFeedback = (
+export const postFeedback = ({
   firstName,
   lastName,
   phoneNum, email,
   agree,
   contactType,
-  feedback) => dispatch => {
+  feedback}) => dispatch => {
 
   const newFeedback = {
       firstName: firstName,
@@ -67,7 +67,7 @@ export const postFeedback = (
       feedback: feedback
   };
   newFeedback.date = new Date().toISOString();
-
+  console.log('new feedback gathered:', newFeedback)
   return fetch(baseUrl + 'feedback', {
           method: "POST",
           body: JSON.stringify(newFeedback),
